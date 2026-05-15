@@ -1,28 +1,42 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {View, Text, Button} from 'react-native';
 
-import {RootStackParamList} from '../navigation/AppNavigator';
+const Stack = createStackNavigator();
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Detail'>;
-
-const DetailScreen = ({route}: Props) => {
+const HomeScreen = ({navigation}: any) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{route.params.title}</Text>
+    <View>
+      <Text>Home Screen</Text>
+
+      <Button
+        title="Go to Detail"
+        onPress={() => navigation.navigate('Detail')}
+      />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-  },
-});
+const DetailScreen = ({navigation}: any) => {
+  return (
+    <View>
+      <Text>Detail Screen</Text>
 
-export default DetailScreen;
+      <Button title="Go Back" onPress={() => navigation.goBack()} />
+    </View>
+  );
+};
+
+const AppNavigator = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Detail" component={DetailScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default AppNavigator;
