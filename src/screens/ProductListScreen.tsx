@@ -41,7 +41,9 @@ const ProductListScreen = ({navigation}: any) => {
     navigation.setOptions({
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate('Favorites')}>
-          <Text style={styles.favoriteHeader}>Favorites</Text>
+          <View style={styles.favoriteHeader}>
+            <Text style={styles.favoriteHeaderText}>Favorites</Text>
+          </View>
         </Pressable>
       ),
     });
@@ -135,8 +137,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   favoriteHeader: {
-    color: '#1677ff',
-    fontWeight: 'bold',
+    paddingRight: 16,
+  },
+
+  favoriteHeaderText: {
+    color: '#222',
+    fontWeight: '600',
+    fontSize: 15,
   },
 });
 
