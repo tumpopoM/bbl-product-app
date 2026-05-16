@@ -1,8 +1,21 @@
 import React from 'react';
-import {Text, Image, StyleSheet, ScrollView} from 'react-native';
+import {Text, Image, StyleSheet, ScrollView, Pressable} from 'react-native';
+import {useFavorites} from '../context/FavoritesContext';
 
 const ProductDetailScreen = ({route}: any) => {
   const {product} = route.params;
+
+  const {addFavorite, removeFavorite, isFavorite} = useFavorites();
+
+  const favorite = isFavorite(product.id);
+
+  const handleFavorite = () => {
+    if (favorite) {
+      removeFavorite(product.id);
+    } else {
+      addFavorite(product);
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -15,6 +28,14 @@ const ProductDetailScreen = ({route}: any) => {
       <Text style={styles.title}>{product.title}</Text>
 
       <Text style={styles.price}>${product.price}</Text>
+
+      <Pressable
+        onPress={handleFavorite}
+        style={[styles.favoriteButton, favorite && styles.favoriteActive]}>
+        <Text style={styles.favoriteText}>
+          {favorite ? 'Remove from Favorites' : 'Add to Favorites'}
+        </Text>
+      </Pressable>
 
       <Text style={styles.category}>{product.category}</Text>
 
@@ -56,6 +77,22 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     lineHeight: 24,
+  },
+  favoriteButton: {
+    backgroundColor: '#1677ff',
+    padding: 14,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+
+  favoriteActive: {
+    backgroundColor: '#ff4d4f',
+  },
+
+  favoriteText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
