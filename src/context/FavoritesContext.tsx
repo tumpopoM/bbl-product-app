@@ -1,4 +1,5 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type FavoritesContextType = {
   favorites: any[];
@@ -16,6 +17,34 @@ const FavoritesContext = createContext<FavoritesContextType>(
 
 export const FavoritesProvider = ({children}: any) => {
   const [favorites, setFavorites] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadFavorites();
+  }, []);
+
+  useEffect(() => {
+    const saveFavorites = async () => {
+      try {
+        await AsyncStorage.setItem('FAVORITES', JSON.stringify(favorites));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    saveFavorites();
+  }, [favorites]);
+
+  const loadFavorites = async () => {
+    try {
+      const storedFavorites = await AsyncStorage.getItem('FAVORITES');
+
+      if (storedFavorites) {
+        setFavorites(JSON.parse(storedFavorites));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const addFavorite = (product: any) => {
     setFavorites(prev => [...prev, product]);
