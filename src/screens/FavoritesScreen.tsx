@@ -1,10 +1,10 @@
 import React from 'react';
 
-import {View, Text, FlatList, Image, StyleSheet, Pressable} from 'react-native';
+import {Text, FlatList, Image, StyleSheet, Pressable} from 'react-native';
 
 import {useFavorites} from '../context/FavoritesContext';
 
-const FavoritesScreen = () => {
+const FavoritesScreen = ({navigation}: any) => {
   const {favorites, removeFavorite} = useFavorites();
 
   return (
@@ -16,7 +16,13 @@ const FavoritesScreen = () => {
         <Text style={styles.emptyText}>No favorite products</Text>
       }
       renderItem={({item}) => (
-        <View style={styles.card}>
+        <Pressable
+          style={styles.card}
+          onPress={() =>
+            navigation.navigate('ProductDetail', {
+              product: item,
+            })
+          }>
           <Image
             source={{uri: item.image}}
             style={styles.image}
@@ -34,7 +40,7 @@ const FavoritesScreen = () => {
             onPress={() => removeFavorite(item.id)}>
             <Text style={styles.removeText}>Remove Favorite</Text>
           </Pressable>
-        </View>
+        </Pressable>
       )}
     />
   );
