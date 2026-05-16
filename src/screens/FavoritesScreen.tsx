@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
+import {View, Text, FlatList, Image, StyleSheet, Pressable} from 'react-native';
 
 import {useFavorites} from '../context/FavoritesContext';
 
 const FavoritesScreen = () => {
-  const {favorites} = useFavorites();
+  const {favorites, removeFavorite} = useFavorites();
 
   return (
     <FlatList
@@ -28,6 +28,12 @@ const FavoritesScreen = () => {
           </Text>
 
           <Text style={styles.price}>${item.price}</Text>
+
+          <Pressable
+            style={styles.removeButton}
+            onPress={() => removeFavorite(item.id)}>
+            <Text style={styles.removeText}>Remove Favorite</Text>
+          </Pressable>
         </View>
       )}
     />
@@ -67,6 +73,18 @@ const styles = StyleSheet.create({
 
   price: {
     fontSize: 18,
+    fontWeight: 'bold',
+  },
+  removeButton: {
+    backgroundColor: '#ff4d4f',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+
+  removeText: {
+    color: '#fff',
     fontWeight: 'bold',
   },
 });
