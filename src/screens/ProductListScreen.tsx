@@ -77,6 +77,9 @@ const ProductListScreen = ({navigation}: any) => {
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
+      ListEmptyComponent={
+        <Text style={styles.emptyText}>No favorite products</Text>
+      }
       contentContainerStyle={styles.list}
       renderItem={({item}) => (
         <Pressable
@@ -145,6 +148,12 @@ const styles = StyleSheet.create({
     color: '#222',
     fontWeight: '600',
     fontSize: 15,
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 40,
+    fontSize: 16,
+    color: '#999',
   },
 });
 
