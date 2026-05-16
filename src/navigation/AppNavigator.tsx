@@ -1,19 +1,38 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Text} from 'react-native';
+
+import ProductListScreen from '../screens/ProductListScreen';
+import ProductDetailScreen from '../screens/ProductDetailScreen';
+
+export type RootStackParamList = {
+  ProductList: undefined;
+  ProductDetail: {
+    product: any;
+  };
+};
 
 const Stack = createStackNavigator();
-
-const DummyScreen = () => {
-  return <Text>Hello</Text>;
-};
 
 const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={DummyScreen} />
+        <Stack.Screen
+          name="ProductList"
+          component={ProductListScreen}
+          options={{
+            title: 'Products',
+          }}
+        />
+
+        <Stack.Screen
+          name="ProductDetail"
+          component={ProductDetailScreen}
+          options={{
+            title: 'Product Detail',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
