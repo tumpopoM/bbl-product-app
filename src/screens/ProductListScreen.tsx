@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -36,6 +36,16 @@ const ProductListScreen = ({navigation}: any) => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Pressable onPress={() => navigation.navigate('Favorites')}>
+          <Text style={styles.favoriteHeader}>Favorites</Text>
+        </Pressable>
+      ),
+    });
+  }, [navigation]);
 
   const handleRefresh = async () => {
     try {
@@ -122,6 +132,10 @@ const styles = StyleSheet.create({
 
   price: {
     fontSize: 18,
+    fontWeight: 'bold',
+  },
+  favoriteHeader: {
+    color: '#1677ff',
     fontWeight: 'bold',
   },
 });
