@@ -39,6 +39,7 @@ const ProductListScreen = ({navigation}: any) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
+      // eslint-disable-next-line react/no-unstable-nested-components
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate('Favorites')}>
           <View style={styles.favoriteHeader}>
